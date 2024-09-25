@@ -4,4 +4,7 @@ scikit-learn
 sqlalchemy
 python-dotenv
 nltk
+pymysql
+dvc
+
 
