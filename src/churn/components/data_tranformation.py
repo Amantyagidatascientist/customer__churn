@@ -23,6 +23,8 @@ class DataTransformationConfig:
     predecessor_obj_file_path1 = os.path.join('artifacts', 'train_df.pkl')
     predecessor_obj_file_path2= os.path.join('artifacts', 'test_df.pkl')
     predecessor_obj_file_path3= os.path.join('artifacts', 'valdtion.pkl')
+    predecessor_obj_file_path4= os.path.join('artifacts', 'target.pkl')
+    predecessor_obj_file_path5= os.path.join('artifacts', 'target_test.pkl')
 
 
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -115,9 +117,12 @@ class DataTransformation:
             test = pd.read_csv(test)
             logging.info(f"train shape: {train.shape}")
             logging.info(f"test  shape: {test.shape}")
+            churn_risk_test=test['churn_risk_score']
+            test=test.drop(columns=['churn_risk_score'],axis=1)
+
+
             churn_risk_train=train['churn_risk_score']
             train=train.drop(columns=['churn_risk_score'],axis=1)
-            logging.info(f"Categorical columns: {train.shape}")
 
             transform_fun=self.get_data_transformer_object()
             train_df=transform_fun.fit_transform(train)
@@ -131,11 +136,16 @@ class DataTransformation:
             save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path1,
                         obj=train_df)
             save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path2,
-                        obj=test_df)
+                        obj=test_df)           
+            save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path4,
+                        obj=churn_risk_train)
+            save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path5,
+                        obj=churn_risk_test)
 
             return (train_df,
                     test_df,
-                    churn_risk_train)
+                    churn_risk_train,
+                    churn_risk_test)
         
 
              

@@ -6,5 +6,9 @@ python-dotenv
 nltk
 pymysql
 dvc
+catboost
+xgboost
+Flask
+
 
 

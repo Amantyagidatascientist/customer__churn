@@ -10,7 +10,8 @@ if __name__=="__main__" :
         Data_Ingestion=DataIngestion()
         train,test,validation=Data_Ingestion.initiate_data_ingestion()
         data_tranformation=DataTransformation()
-        r,_,_=data_tranformation.initiate_data_transformation(test,train)
+        r,_,_,_=data_tranformation.initiate_data_transformation(train,validation)
+        
         
         print(r.info())
     except Exception as e:
