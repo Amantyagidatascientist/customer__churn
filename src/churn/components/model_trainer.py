@@ -8,6 +8,8 @@ from sklearn.ensemble import AdaBoostClassifier,GradientBoostingClassifier,Rando
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.naive_bayes import  BernoulliNB
 
 from src.churn.exception import CustomException
 from src.churn.logger import logging
@@ -30,7 +32,7 @@ class ModelTrainer:
                 "Gradient Boosting" : GradientBoostingClassifier(),
                 "XG Boosting" : XGBClassifier(),
                 "catBoosting" : CatBoostClassifier(),
-                "AdaBoosting" : AdaBoostClassifier(),
+                "Bernoulli Naive Bayes" : BernoulliNB(),
 
             }
             params={
@@ -69,8 +71,7 @@ class ModelTrainer:
                     "loss":['linear',"square","exponential"],
                     "n_estimators":[8,16,32,64,128,256]
                 }
-
-
+                
                 }
             
             model_report:dict=evaluate_models(train,test,target,target_test,models,params)

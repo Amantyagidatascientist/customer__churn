@@ -20,11 +20,10 @@ import os
 
 @dataclass
 class DataTransformationConfig:
-    predecessor_obj_file_path1 = os.path.join('artifacts', 'train_df.pkl')
-    predecessor_obj_file_path2= os.path.join('artifacts', 'test_df.pkl')
-    predecessor_obj_file_path3= os.path.join('artifacts', 'valdtion.pkl')
-    predecessor_obj_file_path4= os.path.join('artifacts', 'target.pkl')
-    predecessor_obj_file_path5= os.path.join('artifacts', 'target_test.pkl')
+    predecessor_obj_file_path1 = os.path.join('artifacts', 'train_tranform.pkl')
+    predecessor_obj_file_path2= os.path.join('artifacts', 'test_tranform.pkl')
+    predecessor_obj_file_path4= os.path.join('artifacts', 'target_tranform.pkl')
+    predecessor_obj_file_path5= os.path.join('artifacts', 'target_test_tranform.pkl')
 
 
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -130,7 +129,10 @@ class DataTransformation:
             train_df=pd.DataFrame(train_df)
             test_df=pd.DataFrame(test_df)
             logging.info(f"train_df: {train_df.shape}")
+            logging.info(f"churn_risk_train: {churn_risk_train.shape}")
             logging.info(f"test_df: {test_df.shape}")
+            logging.info(f"churn_risk_test: {churn_risk_test.shape}")
+
 
 
             save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path1,

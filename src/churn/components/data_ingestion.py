@@ -23,7 +23,7 @@ class DataIngestion:
             try:
                   logging.info("read the completed database")
                   # train,test=read_sql_data()
-                  train=pd.read_csv('E:/customer_churn/artifacts/train.csv')
+                  train=pd.read_csv('E:/customer_churn/artifacts/churn_train.csv')
                   test=pd.read_csv('E:/customer_churn/artifacts/test.csv')
 
                   os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)

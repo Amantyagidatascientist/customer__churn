@@ -5,3 +5,7 @@
 /train_df.pkl
 /target.pkl
 /target_test.pkl
+/target_test_tranform.pkl
+/target_tranform.pkl
+/test_tranform.pkl
+/train_tranform.pkl

@@ -1,0 +1,5 @@
+outs:
+- md5: d2b6b9c7dc57625bab7612da00d4ecf2
+  size: 13495000
+  hash: md5
+  path: train_tranform.pkl

@@ -1,0 +1,5 @@
+outs:
+- md5: ccdc4083e9b0201a4d8bc978ebfbca91
+  size: 59824
+  hash: md5
+  path: target_test_tranform.pkl
