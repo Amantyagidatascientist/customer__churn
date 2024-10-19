@@ -2,13 +2,13 @@ import os
 import pickle
 import sys
 
-from sklearn.model_selection import GridSearchCV
 from src.churn.logger import logging
 import pandas as pd
 from src.churn.exception import CustomException
 from dataclasses import dataclass
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sklearn.metrics import accuracy_score
 
 
 load_dotenv()
@@ -34,37 +34,35 @@ def read_sql_data():
         logging.info("reading is  sql database end")
 
         print(test.head())
-
-
-
         return train , test
     
     
     except Exception as e:
            raise CustomException(e,sys)
     
-#def evaluate_models(x_train,y_train,x_test,y_test,models,param):
-   # try:
-    #    report={}
+def evaluate_models(x_train,y_train,x_test,y_test,models,param):
+    try:
+        report={}
 
-     #   for i in range(len(list(models))):
-     #        model=list(models.values())[i]
-     #        para=param[list(models.keys())[i]]
+        for i in range(len(list(models))):
+             model=list(models.values())[i]
+             param=param[list(models.keys())[i]]
 
-      #       gs=GridSearchCV(model,param,cv=3)
-       #      gs.fit(x_train,y_train)
+             gs=GridSearchCV(model,param,cv=3)
+             gs.fit(x_train,y_train)
 
-        #     model.set_params(**gs.best_params_)
-         #    model.fit(x_train,y_train)
-#
- #            y_train_pred=model.predict(x_train)
-  #           y_test_pred=model.predict(x_test)
+             model.set_params(**gs.best_params_)
+             model.fit(x_train,y_train)
 
-   #          train_model_score=
+             y_train_pred=model.predict(x_train)
+             y_test_pred=model.predict(x_test)
 
-    #         report[list(models.keys())[i]]=train_model_score
+             test_model_score=accuracy_score(y_test_pred,y_test)
+             train_model_score=accuracy_score(y_train_pred,y_train)
 
-     #        return report
+             report[list(models.keys())[i]]=train_model_score
+
+             return report
 
 
 
