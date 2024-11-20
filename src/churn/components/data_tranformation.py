@@ -24,6 +24,7 @@ class DataTransformationConfig:
     predecessor_obj_file_path2= os.path.join('artifacts', 'test_tranform.pkl')
     predecessor_obj_file_path4= os.path.join('artifacts', 'target_tranform.pkl')
     predecessor_obj_file_path5= os.path.join('artifacts', 'target_test_tranform.pkl')
+    predecessor_obj_file_path6= os.path.join('artifacts', 'transform_pipeline.pkl')
 
 
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -87,7 +88,7 @@ class DataTransformation:
             ])
 
             categorical_pipeline = Pipeline(steps=[
-                ('imputer', SimpleImputer(strategy='constant', fill_value='Unknown',add_indicator=True)),
+                ('imputer', SimpleImputer(strategy='constant', fill_value='Unknown')),
                 ('OneHotEncoder',OneHotEncoder(drop='if_binary'))
                 ])
 
@@ -119,13 +120,12 @@ class DataTransformation:
             churn_risk_test=test['churn_risk_score']
             test=test.drop(columns=['churn_risk_score'],axis=1)
 
-
             churn_risk_train=train['churn_risk_score']
             train=train.drop(columns=['churn_risk_score'],axis=1)
 
-            transform_fun=self.get_data_transformer_object()
-            train_df=transform_fun.fit_transform(train)
-            test_df=transform_fun.transform(test)
+            transform_pipeline=self.get_data_transformer_object()
+            train_df=transform_pipeline.fit_transform(train)    
+            test_df=transform_pipeline.transform(test)
             train_df=pd.DataFrame(train_df)
             test_df=pd.DataFrame(test_df)
             logging.info(f"train_df: {train_df.shape}")
@@ -143,6 +143,10 @@ class DataTransformation:
                         obj=churn_risk_train)
             save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path5,
                         obj=churn_risk_test)
+            save_object(file_path=self.data_tranformation_config.predecessor_obj_file_path6, 
+                        obj=transform_pipeline)
+            
+            logging.info("Transformation pipeline and data saved successfully.")
 
             return (train_df,
                     test_df,
