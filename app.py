@@ -2,7 +2,6 @@ from flask import Flask, render_template,request
 import pandas as pd
 import pickle
 
-
 with open('./artifacts/transform_pipeline.pkl', 'rb') as f:
     pipeline = pickle.load(f)
 
@@ -21,7 +20,6 @@ def analysis():
     return render_template("Automated_EDA.html")
 
 
-
 @app.route("/prediction", methods=['GET', 'POST'])
 def prediction():
     if request.method == "POST":
@@ -33,26 +31,37 @@ def prediction():
             last_visit_time = request.form.get('time', '')
             points_in_wallet = float(request.form.get('points_in_wallet', 0.0))
             date = request.form.get('date', '')
+            avg_frequency_login_days=int(request.form.get('avg_frequency_login_days', 0))
             gender = request.form.get('gender', 'Unknown')
             region_category = request.form.get('region_category', 'Unknown')
             membership_category = request.form.get('membership_category', 'Unknown')
             joined_through_referral = request.form.get('joined_through_referral', 'No')
             preferred_offer_types = request.form.get('preferred_offer_types', 'None')
             medium_of_operation = request.form.get('medium_of_operation', 'Unknown')
+            complaint_status= request.form.get('complaint_status', 'Unknown')
             internet_option = request.form.get('internet_option', 'Unknown')
             used_special_discount = request.form.get('used_special_discount', 'No')
             offer_application_preference = request.form.get('offer_application_preference', 'No')
             past_complaint = request.form.get('past_complaint', 'No')
             feedback = request.form.get('feedback', 'None')
 
+            ## Handle missing fields by setting defaults if they are not filled in
+
+            customer_id = request.form.get('customer_id', 'Unknown')
+            security_no= request.form.get('security_no', 'Unknown')
+            Name = request.form.get('Name', 'Unknown')
+            referral_id=request.form.get('referral_id', 'Unknown')
+
             # Creating a DataFrame for the input data
             data = {
                 'age': [age],
                 'days_since_last_login': [last_login],
                 'avg_time_spent': [avg_time_spent],
+                'avg_frequency_login_days':[avg_frequency_login_days],
                 'avg_transaction_value': [avg_transaction_value],
                 'points_in_wallet': [points_in_wallet],
                 'gender': [gender],
+                'complaint_status':[complaint_status],
                 'region_category': [region_category],
                 'membership_category': [membership_category],
                 'joining_date': [date],
@@ -64,7 +73,11 @@ def prediction():
                 'used_special_discount': [used_special_discount],
                 'offer_application_preference': [offer_application_preference],
                 'past_complaint': [past_complaint],
-                'feedback': [feedback]
+                'feedback': [feedback],
+                'customer_id':[customer_id], 
+                'Name':Name,
+                'security_no':security_no, 
+                'referral_id':referral_id
             }
 
             data_df = pd.DataFrame(data)
@@ -83,5 +96,8 @@ def prediction():
         return render_template("prediction.html")
 
 
+
+
 if __name__ == "__main__":
     app.run(debug=True)
+

@@ -1,5 +1,0 @@
-outs:
-- md5: 1c8ec47833a4a7f239ae8d122c6087b0
-  size: 1603648
-  hash: md5
-  path: transform_pipeline.pkl
