@@ -8,7 +8,6 @@ with open('./artifacts/transform_pipeline.pkl', 'rb') as f:
 with open('./artifacts/model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-
 app = Flask(__name__, template_folder='./tamplates')
 
 @app.route('/')
@@ -94,9 +93,6 @@ def prediction():
             return render_template("prediction.html", error=f"Error during prediction: {e}")
     else:
         return render_template("prediction.html")
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
