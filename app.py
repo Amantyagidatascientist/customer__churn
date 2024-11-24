@@ -8,7 +8,7 @@ with open('./artifacts/transform_pipeline.pkl', 'rb') as f:
 with open('./artifacts/model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-app = Flask(__name__, template_folder='./tamplates')
+app = Flask(__name__, template_folder='./templates')
 
 @app.route('/')
 def home():
