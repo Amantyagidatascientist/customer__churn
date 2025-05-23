@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 import numpy as np
 from pygit2 import Passthrough
+import os
 
 
 with open('./artifacts/transform_pipeline.pkl', 'rb') as f:
@@ -97,5 +98,9 @@ def prediction():
     else:
         return render_template("prediction.html")
 
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Render sets PORT; fallback to 10000 locally
+    app.run(debug=False, host="0.0.0.0", port=port)
