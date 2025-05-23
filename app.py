@@ -1,6 +1,9 @@
 from flask import Flask, render_template,request
 import pandas as pd
 import pickle
+import numpy as np
+from pygit2 import Passthrough
+
 
 with open('./artifacts/transform_pipeline.pkl', 'rb') as f:
     pipeline = pickle.load(f)
@@ -96,4 +99,3 @@ def prediction():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
